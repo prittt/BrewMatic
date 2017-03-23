@@ -577,8 +577,9 @@ Based  Connected-Component  Labeling, IEEE  Transactions  on  Image Processing, 
 
 <a name="MEDICAL">[15]</a><p align="justify"><em>F. Dong, H. Irshad, E.-Y. Oh, M. F. Lerwill, E. F. Brachtel, N. C. Jones, N. W. Knoblauch, L. Montaser-Kouhsari, N. B. Johnson, L. K. Rao et al., “Computational Pathology to Discriminate Benign from Malignant Intraductal Proliferations of the Breast,” PloS one, vol. 9, no. 12, p. e114885, 2014.</em></p>
 
-<a name="FINGERPRINTS">[16]</a><p align="justify"><em>D. Maltoni, D. Maio, A. Jain, and S. Prabhakar, Handbook of fingerprint
+<p align="justify"><em><a name="FINGERPRINTS">[16]</a> D. Maltoni, D. Maio, A. Jain, and S. Prabhakar, Handbook of fingerprint
 recognition. Springer Science & Business Media, 2009.</em></p>
 
-<a name="YACCLAB">[17]</a><p align="justify"><em>C.Grana, F.Bolelli, L.Baraldi, and R.Vezzani, YACCLAB - Yet Another Connected Components Labeling Benchmark, Proceedings of the 23rd International Conference on Pattern Recognition, Cancun, Mexico, 4-8 Dec 2016, 2016</em></p>
+<em><a name="YACCLAB">[17]</a> C.Grana, F.Bolelli, L.Baraldi, and R.Vezzani, YACCLAB - Yet Another Connected Components Labeling Benchmark, Proceedings of the 23rd International Conference on Pattern Recognition, Cancun, Mexico, 4-8 Dec 2016, 2016</em>
+
 

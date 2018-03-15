@@ -1,0 +1,4 @@
+Wiki: https://www.dfrobot.com/wiki/index.php/DFPlayer_Mini_SKU:DFR0299
+
+Other guides: 
+	https://stonez56.blogspot.it/2015/03/arduino-dfplayer-mini-mp3-module.html

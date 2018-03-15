@@ -1,0 +1,8 @@
+https://www.arduino.cc/en/Tutorial/SimpleAudioPlayer
+
+https://maker.pro/projects/arduino/arduino-audio-player
+
+Robot Italy
+product: https://www.robot-italy.com/it/dfplayer-a-mini-mp3-player-for-arduino.html
+links:  
+	https://www.dfrobot.com/wiki/index.php/DFPlayer_Mini_SKU:DFR0299

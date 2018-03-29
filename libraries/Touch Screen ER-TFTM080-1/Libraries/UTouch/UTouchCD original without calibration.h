@@ -18,6 +18,6 @@
 // calibration sketch anyway
 
 
-#define CAL_X 0x003C4F3CUL   //ER-TFTM080-1
-#define CAL_Y 0x007FCEEBUL   //ER-TFTM080-1
+#define CAL_X 0x03E3009AUL   //ER-TFTM080-1
+#define CAL_Y 0x03C6C186UL   //ER-TFTM080-1
 #define CAL_S 0x8031F1DFUL   //ER-TFTM080-1

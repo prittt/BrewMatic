@@ -1,0 +1,24 @@
+*Pick And Place List
+*Company=
+*Author=
+*eMail=
+*
+*Project=XLS Doppio
+*Date=13:18:18
+*CreatedBy=Fritzing 0.9.3b.04.19.5c895d327c44a3114e5fcc9d8260daf0cbb52806
+*
+*
+*Coordinates in mm, always center of component
+*Origin 0/0=Lower left corner of PCB
+*Rotation in degree (0-360, math. pos.)
+*
+*No;Value;Package;X;Y;Rotation;Side;Name
+1;;THT;42.8907;-12.4336;0;Bottom;J49
+2;220;THT;25.6565;-9.48716;90;Bottom;R2
+3;;THT;2.89814;-12.4336;0;Bottom;J45
+4;;THT;34.8671;-12.4336;0;Bottom;J51
+5;;THT;10.9217;-12.4336;0;Bottom;J47
+6;;THT;44.7065;-1.86716;90;Bottom;J48
+7;220;THT;20.5765;-9.48716;90;Bottom;R1
+8;;THT;7.0231;-8.71217;0;Bottom;J46
+9;;THT;38.9921;-8.71217;0;Bottom;J50

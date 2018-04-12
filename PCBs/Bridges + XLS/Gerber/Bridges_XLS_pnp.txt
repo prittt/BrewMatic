@@ -1,0 +1,41 @@
+*Pick And Place List
+*Company=
+*Author=
+*eMail=
+*
+*Project=Bridges_XLS
+*Date=21:50:05
+*CreatedBy=Fritzing 0.9.3b.04.19.5c895d327c44a3114e5fcc9d8260daf0cbb52806
+*
+*
+*Coordinates in mm, always center of component
+*Origin 0/0=Lower left corner of PCB
+*Rotation in degree (0-360, math. pos.)
+*
+*No;Value;Package;X;Y;Rotation;Side;Name
+1;;THT;32.2545;-77.2;90;Bottom;J12
+2;;THT;45.7472;-57.2963;0;Bottom;J53
+3;;THT;9.87962;-53.5749;0;Bottom;J56
+4;;THT;32.2545;-69.58;90;Bottom;J9
+5;;THT;37.3345;-94.98;90;Bottom;J8
+6;;THT;14.4745;-94.98;90;Bottom;J7
+7;;THT;14.4745;-87.36;90;Bottom;J6
+8;;THT;37.3345;-87.36;90;Bottom;J5
+9;;THT;13.7782;-57.2963;0;Bottom;J54
+10;;THT;41.8486;-53.5749;0;Bottom;J55
+11;;THT;47.4945;-23.86;90;Bottom;J59
+12;;THT;47.5631;-46.7299;90;Bottom;J52
+13;;THT;5.75466;-57.2963;0;Bottom;J58
+14;;THT;13.7097;-34.4264;0;Bottom;J61
+15;;THT;9.81104;-30.705;0;Bottom;J63
+16;220;THT;28.4445;-31.48;90;Bottom;R5
+17;;THT;5.68608;-34.4264;0;Bottom;J65
+18;220;THT;23.3645;-31.48;90;Bottom;R6
+19;;THT;41.78;-30.705;0;Bottom;J62
+20;;THT;14.4745;-69.58;90;Bottom;J10
+21;;THT;14.4745;-77.2;90;Bottom;J11
+22;;THT;37.6551;-34.4264;0;Bottom;J64
+23;220;THT;28.5131;-54.3499;90;Bottom;R3
+24;;THT;45.6787;-34.4264;0;Bottom;J60
+25;;THT;37.7237;-57.2963;0;Bottom;J57
+26;220;THT;23.4331;-54.3499;90;Bottom;R4

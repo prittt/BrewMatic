@@ -80,17 +80,23 @@
 #define BUZZER A9
 
 //************************************************************
-// TEMPERATURE SENSORs
+// TEMPERATURE SENSORs - NEW PLANT UPDATED
 //************************************************************
 
-#define MASH_DS_PIN_UP 8
-#define MASH_DS_PIN_DOWN 7
-#define MASH_DS_REPLACEMENT_PIN 6 // Used to get external/environment temperature to calculate "mash in" correct temperature
+#define MASH_DS_PIN_UP A7 // Most left XLS input on the case (left SIG1 PIN on the MOBO)
+#define MASH_DS_PIN_DOWN A6 // Second left XLS input on the case (left SIG2 PIN on the MOBO)
 
-#define SPARGE_DS_PIN 14
-#define SPARGE_DS_REPLACEMENT_PIN 15 
+#define MASH_DS_REPLACEMENT_PIN A9 // Used to get temperature insed the case and to calculate "mash in" correct temperature (TODO UPDATE THIS FUNCTIONALITY)
 
-#define BOIL_DS_PIN 13
-#define BOIL_DS_REPLACEMENT_PIN 12
+#define SPARGE_DS_PIN 4 // Third left XLS input on the case (right SIG1 PIN on the MOBO)
+#define SPARGE_DS_REPLACEMENT_PIN 5 // Most right XLS input on the case (right SIG2 PIN on the MOBO)
+
+//************************************************************
+// ROTATIVE ENCODER - NEW PLANT UPDATED
+//************************************************************
+
+#define RE_CLK 3
+#define RE_DT 2
+#define RE_SW 18
 
 #endif // MEGA_PINS

@@ -1,7 +1,7 @@
 #include <OneWire.h>
 
-#define PIN 8 
-OneWire ds(8);
+#define PIN A9
+OneWire ds(PIN);
 
 void setup() {
   Serial.begin(9600);

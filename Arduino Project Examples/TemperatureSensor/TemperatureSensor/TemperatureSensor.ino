@@ -1,6 +1,6 @@
 #include <OneWire.h>
 
-#define PIN A9 
+#define PIN A9
 OneWire ds(PIN);
 
 void setup() {

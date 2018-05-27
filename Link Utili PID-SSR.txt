@@ -1,0 +1,16 @@
+PID: 
+
+Arduino Library:
+https://playground.arduino.cc/Code/PIDLibraryConstructor
+
+Additional Theoretical Information
+http://brettbeauregard.com/blog/2017/06/introducing-proportional-on-measurement/
+
+
+Forums (Similar Issue): 
+http://forum.arduino.cc/index.php?topic=5678.0
+http://forum.arduino.cc/index.php?topic=155720.0
+
+
+
+

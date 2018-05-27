@@ -1,0 +1,81 @@
+{
+  "objs": [
+    {
+      "aperture_macros": {},
+      "apertures": {
+        "10": {
+          "size": 0.078,
+          "type": "C"
+        },
+        "11": {
+          "size": 0.083307,
+          "type": "C"
+        },
+        "12": {
+          "size": 0.169291,
+          "type": "C"
+        },
+        "13": {
+          "size": 0.07937,
+          "type": "C"
+        },
+        "14": {
+          "size": 0.15811,
+          "type": "C"
+        },
+        "15": {
+          "size": 0.075,
+          "type": "C"
+        },
+        "16": {
+          "size": 0.075667,
+          "type": "C"
+        },
+        "17": {
+          "size": 0.075695,
+          "type": "C"
+        },
+        "18": {
+          "height": 0.075667,
+          "size": 0.10700929762408498,
+          "type": "R",
+          "width": 0.075667
+        },
+        "19": {
+          "size": 0.048,
+          "type": "C"
+        },
+        "20": {
+          "size": 0.024,
+          "type": "C"
+        },
+        "21": {
+          "height": 0.001,
+          "size": 0.001414213562373095,
+          "type": "R",
+          "width": 0.001
+        }
+      },
+      "frac_digits": 3,
+      "int_digits": 2,
+      "kind": "gerber",
+      "options": {
+        "bboxmargin": 0.0,
+        "bboxrounded": false,
+        "combine_passes": true,
+        "cutoutgapsize": 0.15,
+        "cutoutmargin": 0.1,
+        "cutouttooldia": 0.07,
+        "gaps": "4",
+        "isooverlap": 0.15,
+        "isopasses": 1,
+        "isotooldia": 0.04,
+        "multicolored": false,
+        "name": "Motherboard_PCB1_129990_copperTop.gtl",
+        "noncoppermargin": 0.0,
+        "noncopperrounded": false,
+        "plot": true,
+        "solid": true,
+        "use_buffer_for_union": true
+      },
+      "solid_geometry": 

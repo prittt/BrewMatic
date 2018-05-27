@@ -1,7 +1,18 @@
 #include <OneWire.h>
 
-#define PIN A9 
+#define PIN A7
 OneWire ds(PIN);
+
+
+#define PINB A6
+OneWire ds2(PINB);
+
+#define PINZ 5
+OneWire ds3(PINZ);
+
+#define PINV 4
+OneWire ds4(PINV);
+
 
 void setup() {
   Serial.begin(9600);
@@ -12,7 +23,19 @@ void loop() {
   float t = getTemp(&ds);
   Serial.print("Temp: ");
   Serial.println(t);
+
+  
+  float t2 = getTemp(&ds2);
+  Serial.print("Temp: ");
+  Serial.println(t2);
+  
+  Serial.print("Temp: ");
+  Serial.println(getTemp(&ds3));
+
+  Serial.print("Temp: ");
+  Serial.println(getTemp(&ds4));
   delay(1000);
+
 }
 
 // Returns the temperature from one DS18S20 in DEG Celsius

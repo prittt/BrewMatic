@@ -29,6 +29,10 @@ permissions and limitations under the License.
 
 #include "WindowSelector.h"
 
+#include "ImageButton.h"
+
+extern unsigned short flames25pxls[625];
+
 UTFT myGLCD(SSD1963_800480,38,39,40,41);  //(byte model, int RS, int WR, int CS, int RST, int SER)
 UTouch  myTouch(43, 42, 44, 45, 46);  //byte tclk, byte tcs, byte din, byte dout, byte irq
 
@@ -38,9 +42,18 @@ TouchUTFT touch(&myTouch);
 //manager which is responsible for window updating process
 WindowsManager<MenuWindow> windowsManager(&dc,&touch);
 
+void InitMenuButtonDecorator(){
+
+  DecoratorList *list = new DecoratorList();
+  list->Add(new DecoratorRectFill(Color::SteelBlue, true));
+  //list->Add(new DecoratorRoundRect(tSteelBlue));
+  Environment::Get()->RegisterDecoratorsGroup(F("MenuButton"), list);
+
+}
 
 void setup()
 {
+
 	//setup log (out is wrap about Serial class)
 	out.begin(9600);
 	out<<F("Setup")<<endln;
@@ -53,34 +66,42 @@ void setup()
   pinMode(8, OUTPUT);  //backlight 
   digitalWrite(8, HIGH);//on
   // -------------------------------------------------------------
-  
+
 	//initialize touch
 	myTouch.InitTouch();
 	myTouch.setPrecision(PREC_MEDIUM);
 
 	DC_UTFT::RegisterDefaultFonts();
+  
 	//Initialize apperance. Create your own DefaultDecorators class if you would like different application look
+  InitMenuButtonDecorator();
 	DefaultDecorators::InitAll();
-
+  
 	//initialize window manager
 	windowsManager.Initialize();
 
-	//create tabs
-	windowsManager.MainWnd()->Initialize(); 
-  windowsManager.MainWnd()->AddTab(F("Recipe"));
-  windowsManager.MainWnd()->AddTab(F("Settings"));
-  windowsManager.MainWnd()->AddTab(F("Brewing"));
-//	Window1 *window1=new Window1(F("Window1"),0,0,0,0);
-//	Window2 *window2=new Window2(F("Window2"),0,0,0,0);
-//	Window3 *window3=new Window3(F("Window3"),0,0,0,0);
-//	windowsManager.MainWnd()->AddTab(F("Red"),window1);
-//	windowsManager.MainWnd()->AddTab(F("Yellow"),window2);
-//	windowsManager.MainWnd()->AddTab(F("Green"),window3);
+//  //create windows
+//  WindowHome *win_home = new WindowHome(F("Home"),0,0,0,0);
+//  
+  WindowRecipe *win_mash = new WindowRecipe(F("Mash"),0,0,0,0);
+//  WindowSettings *win_settings = new WindowSettings(F("Settings"),0,0,0,0);
+  WindowRecipe *win_recipe = new WindowRecipe(F("Recipi"),0,0,0,0);
+
+  //create buttons
+	windowsManager.MainWnd()->Initialize();
+
+ 
+  windowsManager.MainWnd()->SetParams(3, 10, 100, 100); // (num button, margins between buttons in pixels, size x, size y)
+  windowsManager.MainWnd()->AddMenuButton(F("Recipe"), win_mash, flames25pxls);
+  windowsManager.MainWnd()->AddMenuButton(F("Brew"), win_mash, flames25pxls);
+  windowsManager.MainWnd()->AddMenuButton(F("Settings"), win_mash, flames25pxls);
+
+  //windowsManager.MainWnd()->AddButton(F("Settings"));
+  //windowsManager.MainWnd()->AddButton(F("Brewing"));
 
 	AHelper::LogFreeRam();
 	delay(1000); 
 	out<<F("End setup")<<endln;
-
 }
 
 void loop()

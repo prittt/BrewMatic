@@ -18,10 +18,10 @@ permissions and limitations under the License.
 #pragma once
 #include <Window.h>
 ///Example window with green background. 
-class Window3 : public Window
+class WindowRecipe : public Window
 {
 public:
-	Window3(const __FlashStringHelper * name,int left,int top,int width,int height):Window(name,left,top,width,height)
+	WindowRecipe(const __FlashStringHelper * name,int left,int top,int width,int height):Window(name,left,top,width,height)
 	{
 		AddDecorator(new DecoratorRectFill(Color::LightGreen,false));
 		AddDecorator(new DecoratorColor(Color::Black));

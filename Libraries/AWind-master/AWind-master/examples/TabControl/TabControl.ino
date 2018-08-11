@@ -30,7 +30,7 @@ permissions and limitations under the License.
 #include "Window2.h"
 #include "Window3.h"
 
-//#include "MenuWindows.h"
+#include "MenuWindows.h"
 
 UTFT myGLCD(SSD1963_800480,38,39,40,41);  //(byte model, int RS, int WR, int CS, int RST, int SER)
 UTouch myTouch(43, 42, 44, 45, 46);  //byte tclk, byte tcs, byte din, byte dout, byte irq

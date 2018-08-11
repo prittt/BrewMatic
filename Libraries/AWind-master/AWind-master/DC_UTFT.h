@@ -133,6 +133,12 @@ public:
 		}
 
 	}
+        ///Draws PROGMEM image. Input coordinates have to be defined in the window coordinate system
+	void DrawImage(const unsigned short * img, int x, int y, int side)
+	{
+		_lcd->drawImage(img, x,y, x + side, y + side);
+
+	}
 	///Returns symbol width for the current font 
 	int FontWidth()
 	{

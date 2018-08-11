@@ -19,47 +19,111 @@ permissions and limitations under the License.
 #include "MainWindow.h"
 #include "Button.h"
 
+#include "ImageButton.h"
+
+extern unsigned short flames25pxls[625];
+
 ///Window selector main window. It works as kind of tab control and can be used more or less without modifications in the target application 
 class MenuWindow : public MainWindow, public ITouchEventReceiver
 {
-	LinkedList<Button> _listButtons; //list of buttons on the left scrren side
-	LinkedList<Window> _listWindow;          //list of depended windows (
+	LinkedList<ImageButton> _listButtons; //list of buttons on the left scrren side
+	LinkedList<Window> _listWindow;       //list of depended windows
+
+  uint8_t _nbuttons;
+  uint8_t _margins;
+  unsigned _szx; 
+  unsigned _szy;
+
+  ImageButton *home_btn;
+
+  
 public:
 	MenuWindow(int wnd_width,int wnd_height):MainWindow(wnd_width,wnd_height)
 	{
+    // Create and register home button
+    home_btn = new ImageButton(F("home"), flames25pxls, 10, 10, 25, 25);
+    home_btn->RegisterTouchEventReceiver(this);
+    AddChild(home_btn);
+    home_btn->SetVisible(false);
 	}
-	///Adds pair: button + corresponding window
-	void AddTab(const __FlashStringHelper *buttonName)
+ 
+	//Adds button and the corresponding window
+	void AddMenuButton(const __FlashStringHelper *button_name /*name of the button and of the corresponding window*/, Window *win, unsigned short* img = NULL)
 	{
-		int wnd_width=Width();
-		int wnd_height=Height();
-		int szx=110;
-		int szy=40;
-		int x=0;
-		int y=0;
-		Button * button=new Button(x+10,(szy+10)*(_listButtons.Count())+20,szx,szy,buttonName);
-		button->SetMargins(5,15);
+		int wnd_width=Width(); // Window width
+		int wnd_height=Height(); // Window height
+    int y = wnd_height / 2 - _szy; // Y value (fixed for each line)
+    int x = (wnd_width - _szx*_nbuttons -_margins*(_nbuttons - 1))/2; // X starting value
+    //out << y << endln;
+    //out << x << endln;
+		ImageButton *button=new ImageButton(button_name, img, x + (_listButtons.Count())*(_szx + _margins), y, _szx, _szy);
 		button->RegisterTouchEventReceiver(this);
 		AddChild(button);
-		//AddChild(window);
-		//window->Move(szx+25,0,wnd_width-szx-25,wnd_height);
-		_listButtons.Add(button);
-    //    _listWindow.Add(window);
-		//if(_listWindow.Count()>1)
-		//	window->SetVisible(false);
-		//else
-		//	_listButtons[0]->SetDecorators(_listWindow[0]->GetDecorators());
-
+    _listButtons.Add(button);
+    
+    AddChild(win);
+    _listWindow.Add(win);
+    win->SetVisible(false);
+   
+		//_listButtons[0]->SetDecorators(_listWindow[0]->GetDecorators());
 	}
+ 
 	void Initialize()
 	{
 		AddDecorator(new DecoratorRectFill(Color::Black,false));
 		AddDecorator(new DecoratorColor(Color::Black));
-
 	}
-	///Events routing for gui interaction (see RegisterTouchEventReceiver and public ITouchEventReceiver declaration)
+ 
+  // Must be called before "AddMenuButton": it defines the positioning of menu buttons
+  void SetParams(uint8_t nbuttons, uint8_t margins, unsigned szx, unsigned szy){
+    _nbuttons = nbuttons;
+    _margins = margins;  
+    _szx = szx; 
+    _szy = szy;
+  }
+  
+	//Events routing for gui interaction (see RegisterTouchEventReceiver and public ITouchEventReceiver declaration)
 	void NotifyTouch(Window *window)
 	{
+      out<<F("NotifyTouch")<<endln;
+
+      if(window == home_btn){
+        
+        out<<F("Home")<<endln;  
+
+        // Disable home button 
+        home_btn->SetVisible(false);
+        // Restore menu view (set all buttons visible)
+        for(int i = 0; i<_nbuttons; ++i){
+          _listButtons[i]->SetVisible(true);  
+        }
+
+        // Force windows rendering
+        this->Invalidate();        
+      }else{
+
+        out<<F("Menu")<<endln;
+
+        // Enable home button 
+        home_btn->SetVisible(true);
+        // Disable all menu buttons except the home one
+        for(int i = 0; i<_nbuttons; ++i){
+          _listButtons[i]->SetVisible(false);  
+        }
+
+        // Force windows rendering
+        this->Invalidate();
+        
+        // TODD
+      
+      }
+      
+      if(window==_listButtons[0])
+      {
+        
+        _listWindow[0]->SetVisible(true);
+        _listWindow[0]->Invalidate();
+      }
 //		int sel_index=-1;
 //		for(int i=0;i<_listButtons.Count();i++)
 //		{

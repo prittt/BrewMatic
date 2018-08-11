@@ -208,6 +208,9 @@ public:
 	///Draws string. Input coordinates have to be defined in the window coordinate system
 	virtual void DrawText(const char * text, int x, int y, HorizontalAlignment aligment = HorizontalAlignment::Left, int width = 0) = 0;
 
+        //Draws image. Input coordinates have to be defined in the windows system
+        virtual	void DrawImage(const unsigned short * img, int x, int y, int side) = 0;
+
 
 	virtual void	drawPixel(int x, int y) = 0;
 

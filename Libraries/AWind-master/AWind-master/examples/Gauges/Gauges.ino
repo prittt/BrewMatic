@@ -25,14 +25,8 @@ permissions and limitations under the License.
 #include "Log.h"
 #include "GaugesWindow.h"
 
-// Setup TFT display + touch (see UTFT and UTouch library documentation)
-#if defined _VARIANT_ARDUINO_DUE_X_   //DUE +tft shield
-UTFT    myGLCD(CTE32,25,26,27,28);
-URTouch  myTouch(6,5,32,3,2);
-#else
-UTFT    myGLCD(ITDB32S,39,41,43,45);
-URTouch  myTouch( 49, 51, 53, 50, 52);
-#endif
+UTFT myGLCD(SSD1963_800480,38,39,40,41);  //(byte model, int RS, int WR, int CS, int RST, int SER)
+UTouch  myTouch(43, 42, 44, 45, 46);  //byte tclk, byte tcs, byte din, byte dout, byte irq
 
 DC_UTFT dc(&myGLCD);
 TouchUTFT touch(&myTouch);
@@ -47,9 +41,16 @@ void setup()
 	out.begin(9600);
 	out<<F("Setup")<<endln;
 
+
 	//initialize display
 	myGLCD.InitLCD();
 	myGLCD.clrScr();
+
+    // -------------------------------------------------------------
+  pinMode(8, OUTPUT);  //backlight 
+  digitalWrite(8, HIGH);//on
+  // -------------------------------------------------------------
+  
 	//initialize touch
 	myTouch.InitTouch();
 	myTouch.setPrecision(PREC_MEDIUM);

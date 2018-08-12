@@ -16,15 +16,26 @@ implied.  See the License for the specific language governing
 permissions and limitations under the License.
 */
 #pragma once
+
 #include <Window.h>
-///Example window with green background. 
-class WindowRecipe : public Window
+
+#include "ImageButton.h"
+
+///Example window with red background
+class SettingsWindow : public Window, public ITouchEventReceiver
 {
+
 public:
-	WindowRecipe(const __FlashStringHelper * name,int left,int top,int width,int height):Window(name,left,top,width,height)
+	SettingsWindow(const __FlashStringHelper * name,int left,int top,int width,int height):Window(name,left,top,width,height)
 	{
-		AddDecorator(new DecoratorRectFill(Color::LightGreen,false));
-		AddDecorator(new DecoratorColor(Color::Black));
+		//AddDecorator(new DecoratorRectFill(Color::Red,false));
+		//AddDecorator(new DecoratorColor(Color::Black));
 	}
 
+  //Events routing for gui interaction (see RegisterTouchEventReceiver and public ITouchEventReceiver declaration)
+  void NotifyTouch(Window *window)
+  {
+      out<<F("NotifyTouchSettingsWindows")<<endln;
+  }
+ 
 };

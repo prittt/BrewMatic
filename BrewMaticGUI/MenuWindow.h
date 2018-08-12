@@ -21,7 +21,8 @@ permissions and limitations under the License.
 
 #include "ImageButton.h"
 
-extern unsigned short flames25pxls[625];
+extern Image home25x25;
+extern Image home30x30;
 
 ///Window selector main window. It works as kind of tab control and can be used more or less without modifications in the target application 
 class MenuWindow : public MainWindow, public ITouchEventReceiver
@@ -41,14 +42,14 @@ public:
 	MenuWindow(int wnd_width,int wnd_height):MainWindow(wnd_width,wnd_height)
 	{
     // Create and register home button
-    home_btn = new ImageButton(F("home"), flames25pxls, 10, 10, 25, 25);
+    home_btn = new ImageButton(F("home"), &home30x30, 10, 10, 30, 30, false, false); //TODO change on click decorator
     home_btn->RegisterTouchEventReceiver(this);
     AddChild(home_btn);
     home_btn->SetVisible(false);
 	}
  
 	//Adds button and the corresponding window
-	void AddMenuButton(const __FlashStringHelper *button_name /*name of the button and of the corresponding window*/, Window *win, unsigned short* img = NULL)
+	void AddMenuButton(const __FlashStringHelper *button_name /*name of the button and of the corresponding window*/, Window *win, Image *img = NULL)
 	{
 		int wnd_width=Width(); // Window width
 		int wnd_height=Height(); // Window height
@@ -87,9 +88,20 @@ public:
 	{
       out<<F("NotifyTouch")<<endln;
 
+      int sel_index=-1;
+      for(int i=0;i<_listButtons.Count();i++)
+      {
+        if(window == _listButtons[i])
+        {
+          sel_index=i;
+          break;
+        }
+      }
+
       if(window == home_btn){
-        
-        out<<F("Home")<<endln;  
+
+        // HOME
+        //out<<F("Home")<<endln;  
 
         // Disable home button 
         home_btn->SetVisible(false);
@@ -97,12 +109,11 @@ public:
         for(int i = 0; i<_nbuttons; ++i){
           _listButtons[i]->SetVisible(true);  
         }
+      } // HOME
+      else{
 
-        // Force windows rendering
-        this->Invalidate();        
-      }else{
-
-        out<<F("Menu")<<endln;
+        // SUBWINDOW        
+        //out<<F("Menu")<<endln;
 
         // Enable home button 
         home_btn->SetVisible(true);
@@ -111,49 +122,31 @@ public:
           _listButtons[i]->SetVisible(false);  
         }
 
-        // Force windows rendering
-        this->Invalidate();
-        
-        // TODD
-      
-      }
-      
-      if(window==_listButtons[0])
-      {
-        
-        _listWindow[0]->SetVisible(true);
-        _listWindow[0]->Invalidate();
-      }
-//		int sel_index=-1;
-//		for(int i=0;i<_listButtons.Count();i++)
-//		{
-//			if(window == _listButtons[i])
-//			{
-//				sel_index=i;
-//				break;
-//			}
-//		}
-//		if(sel_index >=0)
-//		{
-//			DecoratorList *buttonDeco=Environment::Get()->FindDecorators(F("Button"));
-//			for(int i=0;i<_listButtons.Count();i++)
-//			{
-//				_listWindow[i]->SetVisible(i==sel_index);
-//				if(i==sel_index)
-//				{
-//					_listWindow[i]->Invalidate();
-//					_listButtons[i]->SetDecorators(_listWindow[i]->GetDecorators());
-//				}
-//				else
-//				{
-//					if(_listButtons[i]->GetDecorators()!=buttonDeco)
-//					{
-//						_listButtons[i]->SetDecorators(buttonDeco);
-//						_listButtons[i]->Invalidate();
-//					}
-//				}
-//			}
-//		}
-//		//out<<F("Window selected: ")<<sel_index<<endl;
+        // Disable all windows but the selected one
+        if(sel_index >=0)
+        {
+          //DecoratorList *buttonDeco=Environment::Get()->FindDecorators(F("Button"));
+          for(int i=0;i<_listButtons.Count();i++)
+          {
+            _listWindow[i]->SetVisible(i==sel_index);
+            if(i==sel_index)
+            {
+              _listWindow[i]->Invalidate();
+              //_listButtons[i]->SetDecorators(_listWindow[i]->GetDecorators());
+            }
+            else
+            {
+              //if(_listButtons[i]->GetDecorators()!=buttonDeco)
+              //{
+              //  _listButtons[i]->SetDecorators(buttonDeco);
+              //  _listButtons[i]->Invalidate();
+              //}
+            }
+          }
+        } 
+        //out<<F("Window selected: ")<<sel_index<<endl;
+      } // SUBWINDOWS-
+      // Force windows rendering
+      this->Invalidate();
 	}
 };

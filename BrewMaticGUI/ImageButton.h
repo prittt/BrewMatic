@@ -67,6 +67,6 @@ public:
     int left = (Width() - img_cols)/2 > 0 ? Left() + (Width() - img_cols)/2 : Left();
     int top = (Height() - img_rows - text_shift)/2 > 0 ? Top() + (Height() - img_cols - text_shift)/2 : Top();
    
-    dc->DrawImage(img_->data_, left, top, img_rows, img_cols);
+    dc->DrawImage(img_->data_, left, top, img_rows, img_cols);	
 	}
 };

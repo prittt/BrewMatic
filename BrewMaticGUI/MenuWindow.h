@@ -21,11 +21,14 @@ permissions and limitations under the License.
 
 #include "ImageButton.h"
 
+#include "SensorManager.h"
+#include "TextBoxNumber.h"
+
 extern Image home25x25;
 extern Image home30x30;
 
-///Window selector main window. It works as kind of tab control and can be used more or less without modifications in the target application 
-class MenuWindow : public MainWindow, public ITouchEventReceiver
+// This is the menu window which controls menu and home buttons through the ITouchEventReceiver, and internal temperature sensor through ISensorHasDataEventReceiver and ISensorMeasuredEventReceiver.
+class MenuWindow : public MainWindow, public ITouchEventReceiver,public ISensorHasDataEventReceiver, public ISensorMeasuredEventReceiver
 {
 	LinkedList<ImageButton> _listButtons; //list of buttons on the left scrren side
 	LinkedList<Window> _listWindow;       //list of depended windows
@@ -34,19 +37,35 @@ class MenuWindow : public MainWindow, public ITouchEventReceiver
   uint8_t _margins;
   unsigned _szx; 
   unsigned _szy;
-
+  TextBoxString *temp_str_;
+  TextBoxString *system_str_;
+  
   ImageButton *home_btn;
-
   
 public:
 	MenuWindow(int wnd_width,int wnd_height):MainWindow(wnd_width,wnd_height)
 	{
-    // Create and register home button
+    // Init home button
     home_btn = new ImageButton(F("home"), &home30x30, 10, 10, 30, 30, false, false); //TODO change on click decorator
     home_btn->RegisterTouchEventReceiver(this);
     AddChild(home_btn);
     home_btn->SetVisible(false);
+	
+	  // Init internal temperature sensor TextBoxes
+    system_str_ = new TextBoxString(650,450,140,22, "system:       $C"); 
+    initTextBox(system_str_);
+    temp_str_ = new TextBoxString(710,450,40,22, "");
+    initTextBox(temp_str_);
 	}
+
+  // Initialize text box windows with "Sensor" decorator -> black background and white text with small font
+  void initTextBox(TextBox *textBox)
+  {
+    textBox->SetMargins(0,0);
+    textBox->SetDecorators(Environment::Get()->FindDecorators(F("Sensor")));
+    textBox->SetFont(F("Small"));
+    AddChild(textBox);
+  }
  
 	//Adds button and the corresponding window
 	void AddMenuButton(const __FlashStringHelper *button_name /*name of the button and of the corresponding window*/, Window *win, Image *img = NULL)
@@ -145,8 +164,36 @@ public:
           }
         } 
         //out<<F("Window selected: ")<<sel_index<<endl;
-      } // SUBWINDOWS-
+      } // SUBWINDOWS
       // Force windows rendering
       this->Invalidate();
 	}
+
+  void SetSystemTemp(float val){
+    String str_val = "";
+    if (val < 100.0){
+      if(val < 10.0){
+        str_val += "  ";
+      }else{
+        str_val += " ";  
+      }
+    }
+    str_val += String(val) + " ";
+    char *buf = malloc(str_val.length() + 1);
+    str_val.toCharArray(buf, str_val.length());
+    buf[str_val.length() - 1] = '\0';
+    temp_str_->SetText(buf);
+  }
+
+  // Event sensor has new data. If data is the same as measured previosly. This event is not generated.
+  void NotifySensorHasData(SensorManager *sensorManager)
+  {
+    SetSystemTemp(sensorManager->GetData());
+  }
+  
+  // Event is generated after each measurement
+  void NotifySensorMeasured(SensorManager *sensorManager)
+  {
+    //this->InvalidateOnlyChartArea();
+  }
 };

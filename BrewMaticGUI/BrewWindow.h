@@ -23,8 +23,8 @@ class BrewWindow : public Window
 public:
 	BrewWindow(const __FlashStringHelper * name,int left,int top,int width,int height):Window(name,left,top,width,height)
 	{
-		AddDecorator(new DecoratorRectFill(Color::Yellow,false));
-		AddDecorator(new DecoratorColor(Color::Black));
+		//AddDecorator(new DecoratorRectFill(Color::Yellow,false));
+		//AddDecorator(new DecoratorColor(Color::Black));
 	}
 
 };

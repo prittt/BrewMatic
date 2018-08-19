@@ -58,6 +58,14 @@ void InitSensorDecorator(){
   Environment::Get()->RegisterDecoratorsGroup(F("Sensor"), list);
 }
 
+void InitBrewWindowDecorator(){
+  DecoratorList *list = new DecoratorList();
+  //list->Add(new DecoratorRoundRect(tSteelBlue));
+  list->Add(new DecoratorRectFill(Color::Black, false));
+  list->Add(new DecoratorColor(Color::White));
+  Environment::Get()->RegisterDecoratorsGroup(F("BrewWindow"), list);
+}
+
 void setup()
 {
 
@@ -125,8 +133,6 @@ void setup()
 	out<<F("End setup")<<endln;
 }
 
-unsigned long long time_t = millis();
-float i = 0.8;
 void loop()
 {
   if(measurementNode.Measure()){

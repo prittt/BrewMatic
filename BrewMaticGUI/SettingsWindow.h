@@ -35,7 +35,7 @@ public:
   //Events routing for gui interaction (see RegisterTouchEventReceiver and public ITouchEventReceiver declaration)
   void NotifyTouch(Window *window)
   {
-      out<<F("NotifyTouchSettingsWindows")<<endln;
+      //out<<F("NotifyTouchSettingsWindows")<<endln;
   }
  
 };

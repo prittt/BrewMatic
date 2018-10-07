@@ -28,10 +28,10 @@ extern Image home25x25;
 extern Image home30x30;
 
 // This is the menu window which controls menu and home buttons through the ITouchEventReceiver, and internal temperature sensor through ISensorHasDataEventReceiver and ISensorMeasuredEventReceiver.
-class MenuWindow : public MainWindow, public ITouchEventReceiver,public ISensorHasDataEventReceiver, public ISensorMeasuredEventReceiver
+class MenuWindow : public MainWindow, public ITouchEventReceiver, public ISensorHasDataEventReceiver, public ISensorMeasuredEventReceiver
 {
 	LinkedList<ImageButton> _listButtons; //list of buttons on the left scrren side
-	LinkedList<Window> _listWindow;       //list of depended windows
+	LinkedList<Window> windows_list_;       //list of depended windows
 
   uint8_t _nbuttons;
   uint8_t _margins;
@@ -41,6 +41,8 @@ class MenuWindow : public MainWindow, public ITouchEventReceiver,public ISensorH
   TextBoxString *system_str_;
   
   ImageButton *home_btn;
+
+  char buf[7]; //000.00
   
 public:
 	MenuWindow(int wnd_width,int wnd_height):MainWindow(wnd_width,wnd_height)
@@ -82,7 +84,7 @@ public:
     _listButtons.Add(button);
     
     AddChild(win);
-    _listWindow.Add(win);
+    windows_list_.Add(win);
     win->SetVisible(false);
    
 		//_listButtons[0]->SetDecorators(_listWindow[0]->GetDecorators());
@@ -105,7 +107,7 @@ public:
 	//Events routing for gui interaction (see RegisterTouchEventReceiver and public ITouchEventReceiver declaration)
 	void NotifyTouch(Window *window)
 	{
-      out<<F("NotifyTouch")<<endln;
+      //out<<F("NotifyTouch")<<endln;
 
       int sel_index=-1;
       for(int i=0;i<_listButtons.Count();i++)
@@ -128,6 +130,13 @@ public:
         for(int i = 0; i<_nbuttons; ++i){
           _listButtons[i]->SetVisible(true);  
         }
+
+        // Disable all windows
+        for(int i = 0; i<windows_list_.Count(); ++i){
+          windows_list_[i]->SetVisible(false);  
+        }
+
+        
       } // HOME
       else{
 
@@ -147,10 +156,10 @@ public:
           //DecoratorList *buttonDeco=Environment::Get()->FindDecorators(F("Button"));
           for(int i=0;i<_listButtons.Count();i++)
           {
-            _listWindow[i]->SetVisible(i==sel_index);
+            windows_list_[i]->SetVisible(i==sel_index);
             if(i==sel_index)
             {
-              _listWindow[i]->Invalidate();
+              windows_list_[i]->Invalidate();
               //_listButtons[i]->SetDecorators(_listWindow[i]->GetDecorators());
             }
             else
@@ -179,10 +188,10 @@ public:
       }
     }
     str_val += String(val) + " ";
-    char *buf = malloc(str_val.length() + 1);
     str_val.toCharArray(buf, str_val.length());
     buf[str_val.length() - 1] = '\0';
     temp_str_->SetText(buf);
+    //temp_str_->Invalidate();
   }
 
   // Event sensor has new data. If data is the same as measured previosly. This event is not generated.

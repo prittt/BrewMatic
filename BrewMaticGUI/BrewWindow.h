@@ -1,5 +1,5 @@
 /*
-This file is part of AWind library
+GUI library for Arduino TFT and OLED displays
 
 Copyright (c) 2014-2018 Andrei Degtiarev
 
@@ -16,58 +16,94 @@ implied.  See the License for the specific language governing
 permissions and limitations under the License.
 */
 #pragma once
-#include <Window.h>
+#include "MainWindow.h"
+#include "TabButton.h"
+#include "Button.h"
 
-enum shape{
-    VERTICAL = 0,
-    HORIZONTAL = 1
-  };
-
-
-// Brew window
-class BrewWindow : public Window
+///TabControl. Control element wich allows intersactive switch between chidl windows
+class BrewWindow : public Window, public ITouchEventReceiver
 {
+	LinkedList<TabButton> buttons_list; // list of tub buttons
+	LinkedList<Window> windows_list;  //list of child windows
+  static const int _szy = 20;
+  static const int _szx = 120;
+  static const int _overlapping = -4;
+  int cur_x_ = 4;
+
 public:
-	BrewWindow(const __FlashStringHelper * name,int left,int top,int width,int height):Window(name,left,top,width,height)
+	///Constructor
+	/**
+	\param left left coordinate relative to parent indow
+	\param top top coordinate relative to parent indow
+	\param width window width
+	\param height window height
+	*/
+	BrewWindow(const __FlashStringHelper * name, int left, int top, int width, int height):Window(name, left, top, width, height)
 	{
-	  SetDecorators(Environment::Get()->FindDecorators(F("BrewWindow"))); // TODO, allow decorater selection from constructor ?!!
+    SetDecorators(Environment::Get()->FindDecorators(F("BrewWindow"))); // TODO, allow decorater selection from constructor ?!!
+    //AddDecorator(new DecoratorRoundRect(Color::White));
 	}
+	
+	// Adds pair: button + corresponding window. The size of added window is adjusted automatically
+	void AddTab(const __FlashStringHelper *button_name, Window *window)
+	{
+    TabButton * button = new TabButton(cur_x_, 0, _szx, _szy, button_name);
+    button->SetFont(F("Small"));
 
-   
-  
-  void DrawTune(DC *dc, size_t x, size_t y, size_t dim, shape s = shape::VERTICAL){
-    dim = dim % 2 != 0 ? dim - 1 : dim; // "dim" must be even  
-    size_t left_right = dim / 6;
-    size_t handle = dim / 5;
-
-    // Main
-    dc->drawLine(x, y, x + dim, y); // cover line 
-    dc->drawLine(x + left_right, y, x + left_right, y + dim - 2); // left line
-    dc->drawLine(x + dim - left_right, y, x + dim - left_right, y + dim - 2); // righ line
-    dc->drawPixel(x + left_right + 1, y + dim - 1); // left corner
-    dc->drawPixel(x + dim - left_right - 1, y + dim - 1); // right corner
-    dc->drawLine(x + left_right + 2, y + dim, x + dim - left_right - 2, y + dim); // bottom line
-
-    // Handle
-    dc->drawLine(x + handle * 2, y - 5, x + dim - handle * 2, y - 5); // top line
-    dc->drawPixel(x + handle * 2 - 1, y - 4); // left corner
-    dc->drawPixel(x + dim - handle * 2 + 1, y - 4); // right corner
-    dc->drawLine(x + handle * 2 - 2, y - 3, x + handle * 2 - 2, y); // left line
-    dc->drawLine(x + dim - handle * 2 + 2, y - 3, x + dim - handle * 2 + 2, y); // right line
-
-    // Temp (test)
-    dc->SetFont(F("Big"));
-    dc->DrawText(F("000.00"), x + (x - dc->FontWidth()*6 / 2) , y + dim - dc->FontHeight()*2 - 30);
-    dc->DrawText(F("000.00"), x + (x - dc->FontWidth()*6 / 2) , y + dim - dc->FontHeight() - 10);
+    if(windows_list.Count() > 0){
+      button->SetDecorators(Environment::Get()->FindDecorators(F("BrewOtherTab")));
+      window->SetVisible(false);
+    }
+    else{
+      button->SetDecorators(Environment::Get()->FindDecorators(F("BrewCurTab")));
+      window->SetVisible(true);
+    }
+    button->SetMargins(0,5);
+    button->RegisterTouchEventReceiver(this);
+    AddChild(button);
+    AddChild(window);
+    buttons_list.Add(button);
+    windows_list.Add(window);
+    
+    cur_x_ += _szx - _overlapping; // Update cur_x_ for the next tab
   }
- 
-  // Implements drawing code
-  /**
-  \param dc Device context
-  */
-  void OnDraw(DC *dc)
-  {
-    dc->SetColor(Color(255,255, 255));
-    DrawTune(dc, 100, 100, 200);
+
+  void OnDraw(DC *dc){
+    dc->SetColor(Color::White);
+    dc->DrawRoundRect(0, _szy, Width(), Height()); // To draw rectangle on the window
   }
+    
+	// Events routing for gui interaction (see RegisterTouchEventReceiver and public ITouchEventReceiver declaration)
+	void NotifyTouch(Window *window)
+	{
+		int sel_index=-1;
+		for(int i=0;i<buttons_list.Count();i++)
+		{
+			if(window == buttons_list[i])
+			{
+				sel_index=i;
+				break;
+			}
+		}
+		if(sel_index >=0)
+		{
+			for(int i=0;i<buttons_list.Count();i++)
+			{
+				windows_list[i]->SetVisible(i==sel_index);
+				if(i==sel_index)
+				{
+          //out<<"invaldate!\n";
+					buttons_list[i]->SetDecorators(Environment::Get()->FindDecorators(F("BrewCurTab")));
+
+				}
+				else
+				{
+					buttons_list[i]->SetDecorators(Environment::Get()->FindDecorators(F("BrewOtherTab")));
+				}
+        buttons_list[i]->Invalidate();
+        windows_list[i]->Invalidate();
+			}
+		}
+		//out<<F("Window selected: ")<<sel_index<<endl;
+	}
 };

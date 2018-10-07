@@ -35,7 +35,7 @@ public:
 	{
 		InitMainWindow();
 		InitButton();
-		RadioButton();
+		RadioButton();fTe
 		InitDialog();
 		InitEditBox();
 		InitLabel();

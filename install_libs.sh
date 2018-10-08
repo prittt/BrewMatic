@@ -1,5 +1,5 @@
 #!/bin/bash
-project_dir="BrewMaticAlpha01"
+project_dir="BrewMaticAlpha02"
 
 SCRIPTPATH="$( cd "$(dirname "$0")" ; pwd -P )"
 

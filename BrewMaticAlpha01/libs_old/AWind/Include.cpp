@@ -1,0 +1,5 @@
+#include "ArialNumFontPlus.c"
+#include "Environment.cpp"
+#include "TextBoxNumber.cpp"
+#include "TextBoxStrTouch.cpp"
+#include "Window.cpp"

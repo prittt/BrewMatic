@@ -1,18 +1,18 @@
 #!/bin/bash
-
 project_dir="BrewMaticAlpha01"
-
-echo "Please, insert Arduino libraries path, usually /Users/<username>/Documents/Arduino/libraries on mac"
-read arduino_path
 
 SCRIPTPATH="$( cd "$(dirname "$0")" ; pwd -P )"
 
-#echo cur path: $cur_path
+arduino_path="/Users/federicobolelli/Documents/Arduino/libraries"
 
 if [ ! -d "$arduino_path" ]; then
-    echo "The specified directory doesn't exist, quit."
-    exit 1
-fi      
+    echo The default Arduino\'s libraries path \"$arduino_path\" doesn\'t exist, please insert a valid one:
+    read arduino_path
+    while [ ! -d "$arduino_path" ]; do
+        echo The path doesn\'t exist, please insert a valid one:
+        read arduino_path
+    done
+fi
 
 #Move into Arduino's libraries folder
 cd $arduino_path
@@ -24,7 +24,9 @@ cd $arduino_path
 for f in $SCRIPTPATH/$project_dir/libs/*; do
     if [[ -d $f ]]; then
         # $f is a directory
-        #echo $f $project_dir$(basename $f)
-        ln -s $f $project_dir$(basename $f)
+        new_name=$project_dir$(basename $f)
+        if [[ ! -d $new_name ]]; then
+            ln -s $f $new_name
+        fi
     fi
 done

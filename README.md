@@ -3,21 +3,18 @@
 [![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://paypal.me/FedericoBolelli)
 
 <p align="center">
+  <img src="Images/Dissemination/img03.jpg" width="15%" />
   <img src="Images/Dissemination/img01.jpg" width="15%" />
   <img src="Images/Dissemination/img02.jpg" width="15%" />
-  <img src="Images/Dissemination/img03.jpg" width="15%" />
-  <img src="Images/Dissemination/img04.jpg" width="15%" />
-  <img src="Images/Dissemination/img05.jpg" width="15%" />
+  <img src="Images/Dissemination/img07.jpg" width="15%" />
+  <img src="Images/Dissemination/img09.jpg" width="15%" />
   <img src="Images/Dissemination/img06.jpg" width="15%" />
 </p>
 
 <p align="center">
-  <img src="Images/Dissemination/img07.jpg" width="15%" />
-  <img src="Images/Dissemination/img08.jpg" width="15%" />
-  <img src="Images/Dissemination/img09.jpg" width="15%" />
-  <img src="Images/Dissemination/img10.jpg" width="15%" />
-  <img src="Images/Dissemination/img11.jpg" width="15%" />
-  <img src="Images/Dissemination/img12.jpg" width="15%" />
+  <img src="Images/Dissemination/img11.jpg" width="32%" />
+  <img src="Images/Dissemination/img12.jpg" width="32%" />
+  <img src="Images/Dissemination/img05.jpg" width="32%" />
 </p>
 
 An Arduino-based automated brewing control system with touch screen interface for managing mash, sparge, and boil processes.
